@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <template id="payment_form_sadad" inherit_id="payment.payment_acquirer_form">
+            <xpath expr="//div[@id='payment_method']" position="inside">
+                <div t-if="acquirer.provider == 'sadad'">
+                    <input type="hidden" name="merchant_id" t-att-value="tx_values.merchant_id"/>
+                    <input type="hidden" name="secret_key" t-att-value="tx_values.secret_key"/>
+                    <input type="hidden" name="amount" t-att-value="tx_values.amount"/>
+                    <input type="hidden" name="currency" t-att-value="tx_values.currency"/>
+                    <input type="hidden" name="order_id" t-att-value="tx_values.order_id"/>
+                    <input type="hidden" name="description" t-att-value="tx_values.description"/>
+                    <input type="hidden" name="callback_url" t-att-value="tx_values.callback_url"/>
+                    <input type="hidden" name="cancel_url" t-att-value="tx_values.cancel_url"/>
+                </div>
+            </xpath>
+        </template>
+    </data>
+</odoo>
