@@ -1,7 +1,8 @@
 <odoo>
     <data>
         <template id="payment_form_sadad" inherit_id="payment.payment_provider_form">
-            <xpath expr="//div[@id='payment_method']" position="inside">
+            <!-- <xpath expr="//div[@id='payment_method']" position="inside"> -->
+            <xpath expr="//group[@name='payment_state']/field[@name='company_id']" position="after">
                 <div t-if="acquirer.code == 'sadad'">
                     <input type="hidden" name="merchant_id" t-att-value="tx_values.merchant_id"/>
                     <input type="hidden" name="secret_key" t-att-value="tx_values.secret_key"/>
