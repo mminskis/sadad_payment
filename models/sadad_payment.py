@@ -5,12 +5,16 @@ from odoo import models, fields, api
 
 _logger = logging.getLogger(__name__)
 
-class PaymentAcquirerSadad(models.Model):
-    _inherit = 'payment.acquirer'
 
-    provider = fields.Selection(selection_add=[('sadad', 'Sadad')], ondelete={'sadad': 'set default'})
-    sadad_merchant_id = fields.Char('Sadad Merchant ID', required_if_provider='sadad', groups='base.group_user')
-    sadad_secret_key = fields.Char('Sadad Secret Key', required_if_provider='sadad', groups='base.group_user')
+class PaymentProviderSadad(models.Model):
+    _inherit = 'payment.provider'  # Changed from payment.acquirer to payment.provider
+
+    provider = fields.Selection(selection_add=[('sadad', 'Sadad')], ondelete={
+                                'sadad': 'set default'})
+    sadad_merchant_id = fields.Char(
+        'Sadad Merchant ID', required_if_provider='sadad', groups='base.group_user')
+    sadad_secret_key = fields.Char(
+        'Sadad Secret Key', required_if_provider='sadad', groups='base.group_user')
 
     def _get_sadad_urls(self):
         """ Sadad URLS """
