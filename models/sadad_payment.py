@@ -7,23 +7,22 @@ _logger = logging.getLogger(__name__)
 
 
 class PaymentProviderSadad(models.Model):
-    _inherit = 'payment.provider'  # Changed from payment.acquirer to payment.provider
+    _inherit = 'payment.provider'
 
-    # Use selection_add to dynamically add 'Sadad' to the existing providers without removing the others
-    provider = fields.Selection(selection_add=[('sadad', 'Sadad')])
-
+    # Sadad-specific fields for the payment provider configuration
     sadad_merchant_id = fields.Char(
-        'Sadad Merchant ID', required_if_provider='sadad', groups='base.group_user')
+        'Sadad Merchant ID', required=True, groups='base.group_user')
     sadad_secret_key = fields.Char(
-        'Sadad Secret Key', required_if_provider='sadad', groups='base.group_user')
+        'Sadad Secret Key', required=True, groups='base.group_user')
 
     def _get_sadad_urls(self):
-        """ Sadad URLS """
+        """Return Sadad's payment gateway URLs."""
         return {
             'sadad_form_url': 'https://api.sadad.qa/payment',
         }
 
     def sadad_form_generate_values(self, values):
+        """Generate the values for the Sadad payment form."""
         self.ensure_one()
         sadad_tx_values = dict(values)
         sadad_tx_values.update({
@@ -39,6 +38,7 @@ class PaymentProviderSadad(models.Model):
         return sadad_tx_values
 
     def sadad_get_form_action_url(self):
+        """Return the Sadad form action URL."""
         self.ensure_one()
         return self._get_sadad_urls()['sadad_form_url']
 
@@ -49,6 +49,7 @@ class PaymentTransactionSadad(models.Model):
     sadad_txn_id = fields.Char(string='Sadad Transaction ID')
 
     def _sadad_form_get_tx_from_data(self, data):
+        """Retrieve the transaction using the data from Sadad."""
         reference = data.get('order_id')
         txn = self.search([('reference', '=', reference)])
         if not txn or len(txn) > 1:
@@ -58,6 +59,7 @@ class PaymentTransactionSadad(models.Model):
         return txn
 
     def _sadad_form_validate(self, data):
+        """Validate the transaction based on Sadad's response data."""
         self.ensure_one()
         if data.get('status') == 'SUCCESS':
             self._set_transaction_done()
