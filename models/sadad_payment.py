@@ -9,8 +9,9 @@ _logger = logging.getLogger(__name__)
 class PaymentProviderSadad(models.Model):
     _inherit = 'payment.provider'  # Changed from payment.acquirer to payment.provider
 
+    # Define the provider field with a selection to avoid the error
     provider = fields.Selection(selection_add=[('sadad', 'Sadad')], ondelete={
-                                'sadad': 'set default'})
+                                'sadad': 'set default'}, default='sadad')
     sadad_merchant_id = fields.Char(
         'Sadad Merchant ID', required_if_provider='sadad', groups='base.group_user')
     sadad_secret_key = fields.Char(
