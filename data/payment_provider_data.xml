@@ -4,7 +4,8 @@
     <field name="code">sadad</field>
     <field name="state">enabled</field>
     <field name="company_id" eval="False"/>
-    <field name="payment_icon_ids" eval="[(6, 0, [ref('payment.payment_icon_credit_card')])]"/>
+    <!-- Replace 'payment.payment_icon_credit_card' with a valid icon or remove this field if no icon is needed -->
+    <field name="payment_icon_ids" eval="[(6, 0, [])]"/>
     <field name="view_template_id" ref="payment_form_sadad"/>
     <field name="sequence">10</field>
   </record>
