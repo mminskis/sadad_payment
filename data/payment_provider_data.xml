@@ -4,8 +4,7 @@
     <field name="code">sadad</field>
     <field name="state">enabled</field>
     <field name="company_id" eval="False"/>
-    <!-- Removed payment_icon_ids field, as it is not needed -->
-    <field name="view_template_id" ref="payment_form_sadad"/>
+    <!-- Removed the view_template_id field, as it is not supported -->
     <field name="sequence">10</field>
   </record>
 </odoo>
