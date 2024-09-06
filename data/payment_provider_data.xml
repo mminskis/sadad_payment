@@ -1,0 +1,11 @@
+<odoo>
+  <record id="payment_provider_sadad" model="payment.provider">
+    <field name="name">Sadad Payment Gateway</field>
+    <field name="code">sadad</field>
+    <field name="state">enabled</field>
+    <field name="company_id" eval="False"/>
+    <field name="payment_icon_ids" eval="[(6, 0, [ref('payment.payment_icon_credit_card')])]"/>
+    <field name="view_template_id" ref="payment_form_sadad"/>
+    <field name="sequence">10</field>
+  </record>
+</odoo>

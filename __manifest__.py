@@ -8,6 +8,7 @@
     'depends': ['payment', 'website_sale'],
     'data': [
         'views/payment_template.xml',
+        'data/payment_provider_data.xml',
     ],
     'installable': True,
     'application': True,
