@@ -1,18 +1,17 @@
 <odoo>
     <data>
         <template id="payment_form_sadad" inherit_id="payment.payment_provider_form">
-            <!-- Adding the Sadad payment option in the payment method selection -->
-            <xpath expr="//div[@id='payment_method']" position="inside">
+            <!-- Hidden fields for Sadad payment values -->
+            <xpath expr="//group[@name='payment_state']/field[@name='company_id']" position="after">
+                <!-- Radio button to select Sadad as a payment option -->
                 <div class="form-check">
                     <input type="radio" id="payment_acquirer_sadad" name="acquirer" class="form-check-input" t-att-value="'sadad'" required="required"/>
                     <label class="form-check-label" for="payment_acquirer_sadad">
                         Pay with Sadad
                     </label>
                 </div>
-            </xpath>
 
-            <!-- Hidden fields for Sadad payment values -->
-            <xpath expr="//group[@name='payment_state']/field[@name='company_id']" position="after">
+                <!-- Hidden fields with Sadad transaction values -->
                 <div t-if="acquirer.code == 'sadad'">
                     <input type="hidden" name="merchant_id" t-att-value="tx_values.merchant_id"/>
                     <input type="hidden" name="secret_key" t-att-value="tx_values.secret_key"/>
