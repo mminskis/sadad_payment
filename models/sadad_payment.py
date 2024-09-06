@@ -10,7 +10,10 @@ _logger = logging.getLogger(__name__)
 class PaymentProviderSadad(models.Model):
     _inherit = 'payment.provider'
 
-    # Remove the 'required=True' to avoid NOT NULL database constraint
+    # Adding 'sadad' to the selection field for code
+    code = fields.Selection(selection_add=[('sadad', 'Sadad')])
+
+    # Fields for Sadad credentials
     sadad_merchant_id = fields.Char(
         'Sadad Merchant ID', groups='base.group_user')
     sadad_secret_key = fields.Char(
