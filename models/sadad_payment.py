@@ -10,8 +10,9 @@ _logger = logging.getLogger(__name__)
 class PaymentProviderSadad(models.Model):
     _inherit = 'payment.provider'
 
-    # Adding 'sadad' to the selection field for code
-    code = fields.Selection(selection_add=[('sadad', 'Sadad')])
+    # Adding 'sadad' to the selection field for code, with an ondelete policy
+    code = fields.Selection(
+        selection_add=[('sadad', 'Sadad')], ondelete={'sadad': 'cascade'})
 
     # Fields for Sadad credentials
     sadad_merchant_id = fields.Char(
