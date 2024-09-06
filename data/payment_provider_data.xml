@@ -3,8 +3,8 @@
     <field name="name">Sadad Payment Gateway</field>
     <field name="code">sadad</field>
     <field name="state">enabled</field>
-    <!-- Set the company_id to False only if multi-company is not required, otherwise link it to the current company -->
-    <field name="company_id" eval="env.user.company_id.id"/>
+    <field name="company_id" ref="base.main_company"/>
+    <!-- Assuming this is the ID of your company -->
     <field name="sequence">10</field>
   </record>
 </odoo>
