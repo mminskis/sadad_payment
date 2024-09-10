@@ -1,9 +1,27 @@
 <odoo>
     <data>
         <template id="payment_form_sadad" inherit_id="payment.payment_provider_form">
-            <!-- Hidden fields for Sadad payment values -->
+            <!-- Sadad payment values group -->
             <xpath expr="//group[@name='payment_state']/field[@name='company_id']" position="after">
-                <!-- Radio button to select Sadad as a payment option -->
+                <!-- Group for Sadad credentials and actions -->
+                <group name="provider_credentials" position="before">
+                    <!-- Add button to connect Sadad account, similar to Stripe connect button -->
+                    <div name="sadad_onboarding_group" invisible="code != 'sadad' or sadad_merchant_id or sadad_secret_key">
+                        <button string="Connect Sadad" type="object" name="action_sadad_connect_account" class="btn-primary" colspan="2" invisible="state == 'enabled'"/>
+                    </div>
+                </group>
+
+                <!-- Credential input fields -->
+                <group name="provider_credentials" position="inside">
+                    <group invisible="code != 'sadad'" name="sadad_credentials">
+                        <field name="sadad_merchant_id" required="code == 'sadad' and state != 'disabled'"/>
+                        <field name="sadad_secret_key" required="code == 'sadad' and state != 'disabled'" password="True"/>
+                    </group>
+                </group>
+            </xpath>
+
+            <!-- Hidden fields for Sadad transaction values -->
+            <xpath expr="//group[@name='payment_state']/field[@name='company_id']" position="after">
                 <div class="form-check">
                     <input type="radio" id="payment_acquirer_sadad" name="acquirer" class="form-check-input" t-att-value="'sadad'" required="required"/>
                     <label class="form-check-label" for="payment_acquirer_sadad">
@@ -11,7 +29,6 @@
                     </label>
                 </div>
 
-                <!-- Hidden fields with Sadad transaction values -->
                 <div t-if="acquirer.code == 'sadad'">
                     <input type="hidden" name="merchant_id" t-att-value="tx_values.merchant_id"/>
                     <input type="hidden" name="secret_key" t-att-value="tx_values.secret_key"/>
