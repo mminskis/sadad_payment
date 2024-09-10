@@ -60,3 +60,27 @@ class PaymentProviderSadad(models.Model):
             if provider.code == 'sadad' and (not provider.sadad_merchant_id or not provider.sadad_secret_key):
                 raise ValidationError(
                     "Sadad Merchant ID and Secret Key are required for Sadad payment provider.")
+
+
+class PaymentTransactionSadad(models.Model):
+    _inherit = 'payment.transaction'
+
+    sadad_txn_id = fields.Char(string='Sadad Transaction ID')
+
+    def _sadad_form_get_tx_from_data(self, data):
+        reference = data.get('order_id')
+        txn = self.search([('reference', '=', reference)])
+        if not txn or len(txn) > 1:
+            error_msg = 'Sadad: received data for reference %s; no order found' % reference
+            _logger.info(error_msg)
+            raise ValidationError(error_msg)
+        return txn
+
+    def _sadad_form_validate(self, data):
+        self.ensure_one()
+        if data.get('status') == 'SUCCESS':
+            self._set_transaction_done()
+            return True
+        else:
+            self._set_transaction_error('Sadad: feedback error')
+            return False
